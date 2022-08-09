@@ -40,11 +40,12 @@ if(isset($_POST['submit'])){
         }
     }
 }
-
+date_default_timezone_set('America/New_York');
 $duration = 15;
 $cleanup = 0;
-$start = "09:00";
-$end = "16:30";
+$start = "0900";
+$end = "1630";
+
 
 function timeslots($duration, $cleanup, $start, $end){
     $start = new DateTime($start);
@@ -62,7 +63,7 @@ function timeslots($duration, $cleanup, $start, $end){
             break;
         }
         
-        $slots[] = $intStart->format("g:i a")." - ". $endPeriod->format("g:i a");
+        $slots[] = $intStart->format("H:i a")." - ". $endPeriod->format("H:i a");
         
     }
     
@@ -98,8 +99,10 @@ function timeslots($duration, $cleanup, $start, $end){
         <div class="form-group">
             <?php if(in_array($ts, $bookings)){ ?>
                 <button class="btn btn-danger"><?php echo $ts; ?></button>
+            <?php }elseif($ts<date('H:i a')){ ?>
+                <button class="btn btn-danger expire" data-expire="<?php echo $ts; ?>"><?php echo $ts; ?></button>
             <?php }elseif($date<date('Y-m-d')){
-                    $calendar.="<td><h4>$currentDay</h4><button class='btn btn-danger btn-xs'>N/A</button>";
+                $calendar.="<td><h4>$currentDay</h4><button class='btn btn-danger btn-xs'>N/A</button>";
                     }else{ ?>
                 <button class="btn btn-success book" data-timeslot="<?php echo $ts; ?>"><?php echo $ts; ?></button>
             <?php } ?>
@@ -163,6 +166,11 @@ $(".book").click(function(){
     $("#slot").html(timeslot);
     $("#timeslot").val(timeslot);
     $("#myModal").modal("show");
+});
+$(".expire").click(function(){
+    var timeslot = $(this).attr('data-expire');
+    $("#slot").html(timeslot);
+    $("#timeslot").val(timeslot);
 });
 </script>
 </body>

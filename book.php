@@ -45,6 +45,8 @@ $duration = 15;
 $cleanup = 0;
 $start = "0900";
 $end = "1630";
+$today = $date==date('Y-m-d')? "today" : "";
+$currentTime = date('H:i a');
 
 
 function timeslots($duration, $cleanup, $start, $end){
@@ -97,10 +99,10 @@ function timeslots($duration, $cleanup, $start, $end){
     ?>
     <div class="col-md-2">
         <div class="form-group">
-            <?php if(in_array($ts, $bookings)){ ?>
+        <?php if(in_array($ts, $bookings)){ ?>
                 <button class="btn btn-danger"><?php echo $ts; ?></button>
-            <?php }elseif($ts<date('H:i a')){ ?>
-                <button class="btn btn-danger expire" data-expire="<?php echo $ts; ?>"><?php echo $ts; ?></button>
+            <?php }elseif($ts<=$today && $ts<=$currentTime){ ?>
+                <button class="btn btn-danger expire" $today="<?php echo $ts; ?>"><?php echo $ts; ?></button>
             <?php }elseif($date<date('Y-m-d')){
                 $calendar.="<td><h4>$currentDay</h4><button class='btn btn-danger btn-xs'>N/A</button>";
                     }else{ ?>
@@ -166,11 +168,6 @@ $(".book").click(function(){
     $("#slot").html(timeslot);
     $("#timeslot").val(timeslot);
     $("#myModal").modal("show");
-});
-$(".expire").click(function(){
-    var timeslot = $(this).attr('data-expire');
-    $("#slot").html(timeslot);
-    $("#timeslot").val(timeslot);
 });
 </script>
 </body>

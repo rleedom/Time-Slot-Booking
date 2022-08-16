@@ -73,7 +73,6 @@ while ($currentDay <= $numberDays) {
         if($totalbookings==30){
             $calendar.="<td class='$today'><h4>$currentDay</h4><a href='#' class='btn btn-danger btn-xs'>All Booked</a>";
         }else{
-            $availableslots = 30 - $totalbookings;
             $calendar.="<td class='$today'><h4>$currentDay</h4><a href='book.php?date=".$date."' class='btn btn-success btn-xs'>Book</a><small><i>*Slots Still Open</i></small>";
         }
     }

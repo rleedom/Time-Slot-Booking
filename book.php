@@ -43,10 +43,10 @@ if(isset($_POST['submit'])){
 date_default_timezone_set('America/New_York');
 $duration = 15;
 $cleanup = 0;
-$start = "0900";
+$start = "1000";
 $end = "1630";
 $today = $date==date('Y-m-d')? "today" : "";
-$currentTime = date('H:i a');
+$currentTime = date('g:i a');
 
 
 function timeslots($duration, $cleanup, $start, $end){
@@ -65,7 +65,7 @@ function timeslots($duration, $cleanup, $start, $end){
             break;
         }
         
-        $slots[] = $intStart->format("H:i a")." - ". $endPeriod->format("H:i a");
+        $slots[] = $intStart->format("g:i a")." - ". $endPeriod->format("g:i a");
         
     }
     
@@ -133,19 +133,19 @@ function timeslots($duration, $cleanup, $start, $end){
                                 </div>
                                 <div class="form-group">
                                     <label for=""> First Name</label>
-                                    <input type="text" class="form-control" name="first_name">
+                                    <input type="text" class="form-control" name="first_name" placeholder="John">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Last Name</label>
-                                    <input type="text" class="form-control" name="last_name">
+                                    <input type="text" class="form-control" name="last_name" placeholder="Doe">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Invoice Number</label>
-                                    <input type="text" class="form-control" name="invoice_number">
+                                    <input type="text" class="form-control" name="invoice_number" placeholder="123456">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Email</label>
-                                    <input type="email" class="form-control" name="email">
+                                    <input type="email" class="form-control" name="email" placeholder="name@gmail.com"> 
                                 </div>
                                 <div class="form-group pull-right">
                                     <button name="submit" type="submit" class="btn btn-primary">Submit</button>

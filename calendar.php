@@ -70,7 +70,7 @@ while ($currentDay <= $numberDays) {
     }else{
 
         $totalbookings = checkSlots($mysqli, $date);
-        if($totalbookings==30){
+        if($totalbookings==26){
             $calendar.="<td class='$today'><h4>$currentDay</h4><a href='#' class='btn btn-danger btn-xs'>All Booked</a>";
         }else{
             $calendar.="<td class='$today'><h4>$currentDay</h4><a href='book.php?date=".$date."' class='btn btn-success btn-xs'>Book</a><small><i>*Slots Still Open</i></small>";

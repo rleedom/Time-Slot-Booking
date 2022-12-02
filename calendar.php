@@ -1,6 +1,19 @@
 <?php
 function build_calendar($month, $year){
     $mysqli = new mysqli('localhost', 'root', '', 'bookingcalendar');
+    /*$stmt = $mysqli->prepare("select * from bookings where MONTH(date) = ? AND YEAR(date) = ?");
+    $stmt->bind_param('ss', $month, $year);
+    $bookings = array();
+    if($stmt->execute()){
+        $result = $stmt->get_result();
+        if($result->num_rows>0){
+            while($row = $result->fetch_assoc()){
+                $bookings[] = $row['date'];
+            }
+            
+            $stmt->close();
+        }
+    }*/
     
 //Array containing all days in a week
 $daysOfWeek = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
@@ -70,10 +83,11 @@ while ($currentDay <= $numberDays) {
     }else{
 
         $totalbookings = checkSlots($mysqli, $date);
-        if($totalbookings==26){
+        if($totalbookings==30){
             $calendar.="<td class='$today'><h4>$currentDay</h4><a href='#' class='btn btn-danger btn-xs'>All Booked</a>";
         }else{
-            $calendar.="<td class='$today'><h4>$currentDay</h4><a href='book.php?date=".$date."' class='btn btn-success btn-xs'>Book</a><small><i>*Slots Still Open</i></small>";
+            $availableslots = 30 - $totalbookings;
+            $calendar.="<td class='$today'><h4>$currentDay</h4><a href='book.php?date=".$date."' class='btn btn-success btn-xs'>Book</a><small><i>*$availableslots time slots left</i></small>";
         }
     }
     

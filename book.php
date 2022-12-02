@@ -40,14 +40,11 @@ if(isset($_POST['submit'])){
         }
     }
 }
-date_default_timezone_set('America/New_York');
+
 $duration = 15;
 $cleanup = 0;
-$start = "1000";
-$end = "1630";
-$today = $date==date('Y-m-d')? "today" : "";
-$currentTime = date('g:i a');
-
+$start = "09:00";
+$end = "16:30";
 
 function timeslots($duration, $cleanup, $start, $end){
     $start = new DateTime($start);
@@ -55,7 +52,6 @@ function timeslots($duration, $cleanup, $start, $end){
     $interval = new DateInterval("PT".$duration."M");
     $cleanupInterval = new DateInterval("PT".$cleanup."M");
     $slots = array();
-    
     
     
     for($intStart = $start; $intStart<$end; $intStart->add($interval)->add($cleanupInterval)){
@@ -99,16 +95,15 @@ function timeslots($duration, $cleanup, $start, $end){
     ?>
     <div class="col-md-2">
         <div class="form-group">
-        <?php if(in_array($ts, $bookings)){ ?>
+            <?php if(in_array($ts, $bookings)){ ?>
                 <button class="btn btn-danger"><?php echo $ts; ?></button>
-            <?php }elseif($ts<=$today && $ts<=$currentTime){ ?>
-                <button class="btn btn-danger expire" $today="<?php echo $ts; ?>"><?php echo $ts; ?></button>
             <?php }elseif($date<date('Y-m-d')){
-                $calendar.="<td><h4>$currentDay</h4><button class='btn btn-danger btn-xs'>N/A</button>";
-                    }else{ ?>
+                    $calendar.="<td><h4>$currentDay</h4><button class='btn btn-danger btn-xs'>N/A</button>";
+                    }elseif($intStart<time()){
+                        $calendar.="<td><h4>$currentDay</h4><button class='btn btn-danger btn-xs'>N/A</button>";
+                        }else{ ?>
                 <button class="btn btn-success book" data-timeslot="<?php echo $ts; ?>"><?php echo $ts; ?></button>
             <?php } ?>
-            
         </div>
     </div>
     <?php } ?>
@@ -133,19 +128,19 @@ function timeslots($duration, $cleanup, $start, $end){
                                 </div>
                                 <div class="form-group">
                                     <label for=""> First Name</label>
-                                    <input type="text" class="form-control" name="first_name" placeholder="John">
+                                    <input type="text" class="form-control" name="first_name">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Last Name</label>
-                                    <input type="text" class="form-control" name="last_name" placeholder="Doe">
+                                    <input type="text" class="form-control" name="last_name">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Invoice Number</label>
-                                    <input type="text" class="form-control" name="invoice_number" placeholder="123456">
+                                    <input type="text" class="form-control" name="invoice_number">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Email</label>
-                                    <input type="email" class="form-control" name="email" placeholder="name@gmail.com"> 
+                                    <input type="email" class="form-control" name="email">
                                 </div>
                                 <div class="form-group pull-right">
                                     <button name="submit" type="submit" class="btn btn-primary">Submit</button>
